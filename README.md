@@ -1,16 +1,84 @@
-# React + Vite
+# AI Readiness Audit Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
 
-Currently, two official plugins are available:
+This project is a simple web application built using React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The main idea of this project is to check how well a website is prepared for AI-based search systems like ChatGPT, Google AI Search, and other AI recommendation platforms.
 
-## React Compiler
+Nowadays, many users search information using AI tools instead of only using normal search engines. Because of that, websites should be easy for AI systems to understand.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+In this project, the user enters a website URL, and the system shows a mock AI Readiness Score out of 100, some common issues found on the website, and simple suggestions to improve it.
 
-## Expanding the ESLint configuration
+This is a frontend-based mock project created to show the idea of website auditing for AI visibility.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- User can enter any website URL
+- System shows AI Readiness Score
+- Different issue sets are shown for different audits
+- Improvement suggestions are displayed
+- Start New Audit button is available for checking another website
+- Clean and simple user interface
+
+---
+
+## Technologies Used
+
+- React JS
+- JavaScript
+- Vite
+- Inline CSS
+- Vercel for deployment
+
+---
+
+## How the Project Works
+
+First, the user enters a website URL.
+
+After clicking on the "Audit Website" button, the system generates a random AI Readiness Score.
+
+Then it shows some common issues like missing FAQ section, weak heading structure, missing metadata, and low AI search visibility.
+
+It also gives a simple suggestion like adding FAQs, improving headings, and using proper metadata.
+
+If the user wants to check another website, they can click on "Start New Audit" and begin again without refreshing the page.
+
+---
+
+## Example Issues
+
+- Missing FAQ section
+- Weak heading structure
+- No proper metadata
+- Low visibility in AI-based search results
+- Content is not easy for AI tools to understand clearly
+
+---
+
+## Suggestion
+
+Adding FAQs, better headings, and proper metadata can improve visibility in AI-based search results.
+
+---
+
+## Live Project Link
+
+Add your Vercel deployment link here
+
+---
+
+## GitHub Repository Link
+
+Add your GitHub repository link here
+
+---
+
+## Developed By
+
+Arun Banoth  
+B.Tech Final Year – Computer Science and Engineering  
+NIT Patna
