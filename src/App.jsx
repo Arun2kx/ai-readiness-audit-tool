@@ -5,30 +5,88 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [issues, setIssues] = useState([]);
+  const [suggestion, setSuggestion] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const auditSets = [
-    [
-      "Missing FAQ section for common user questions",
-      "Weak heading structure makes content harder to understand",
-      "No proper metadata for search engines",
-      "Low visibility in AI-based search results",
-      "Content is not easy for AI tools to understand clearly"
-    ],
-    [
-      "No clear product explanation for users",
-      "Missing structured content sections",
-      "Poor heading hierarchy across pages",
-      "Search engines cannot understand the content easily",
-      "Limited visibility in AI-generated search answers"
-    ],
-    [
-      "No FAQ or help section available",
-      "Important content is not properly organized",
-      "Weak semantic structure in headings",
-      "Metadata is missing on important pages",
-      "Low discoverability in AI-powered search tools"
-    ]
+    {
+      issues: [
+        "Missing FAQ section for common user questions",
+        "Weak heading structure makes content harder to understand",
+        "No proper metadata for search engines",
+        "Low visibility in AI-based search results",
+        "Content is not easy for AI tools to understand clearly"
+      ],
+      suggestion:
+        "Adding FAQs, better headings, and proper metadata can improve visibility in AI-based search results."
+    },
+    {
+      issues: [
+        "No clear product explanation for users",
+        "Missing structured content sections",
+        "Poor heading hierarchy across pages",
+        "Search engines cannot understand the content easily",
+        "Limited visibility in AI-generated search answers"
+      ],
+      suggestion:
+        "Use clear headings, proper product descriptions, and better structured content for improved AI understanding."
+    },
+    {
+      issues: [
+        "No FAQ or help section available",
+        "Important content is not properly organized",
+        "Weak semantic structure in headings",
+        "Metadata is missing on important pages",
+        "Low discoverability in AI-powered search tools"
+      ],
+      suggestion:
+        "Improve content organization, add FAQ sections, and use proper metadata for better discoverability."
+    }
   ];
+
+  const isValidUrl = (url) => {
+    const cleanUrl = url.trim().toLowerCase();
+
+    const urlPattern =
+      /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.(com|in|org|io|net)$/;
+
+    return urlPattern.test(cleanUrl);
+  };
+
+  const generateScore = (url) => {
+    let finalScore = 0;
+    const cleanUrl = url.toLowerCase().trim();
+
+    for (let i = 0; i < cleanUrl.length; i++) {
+      finalScore += cleanUrl.charCodeAt(i);
+    }
+
+    finalScore = (finalScore % 36) + 60;
+
+    if (cleanUrl.includes(".com")) {
+      finalScore += 4;
+    } else if (cleanUrl.includes(".in")) {
+      finalScore += 3;
+    } else if (cleanUrl.includes(".org")) {
+      finalScore += 2;
+    } else if (cleanUrl.includes(".io")) {
+      finalScore += 2;
+    }
+
+    if (
+      cleanUrl.includes("tech") ||
+      cleanUrl.includes("ai") ||
+      cleanUrl.includes("cloud")
+    ) {
+      finalScore += 3;
+    }
+
+    if (finalScore > 95) {
+      finalScore = 95;
+    }
+
+    return finalScore;
+  };
 
   const handleAudit = () => {
     if (websiteUrl.trim() === "") {
@@ -36,13 +94,27 @@ function App() {
       return;
     }
 
-    const randomScore = Math.floor(Math.random() * 31) + 60;
-    const randomIssues =
-      auditSets[Math.floor(Math.random() * auditSets.length)];
+    if (!isValidUrl(websiteUrl)) {
+      alert("Please enter a valid website URL");
+      return;
+    }
 
-    setScore(randomScore);
-    setIssues(randomIssues);
-    setShowResult(true);
+    setLoading(true);
+    setShowResult(false);
+
+    setTimeout(() => {
+      const calculatedScore = generateScore(websiteUrl);
+
+      const selectedAudit =
+        auditSets[Math.floor(Math.random() * auditSets.length)];
+
+      setScore(calculatedScore);
+      setIssues(selectedAudit.issues);
+      setSuggestion(selectedAudit.suggestion);
+
+      setLoading(false);
+      setShowResult(true);
+    }, 2000);
   };
 
   const handleReset = () => {
@@ -50,6 +122,8 @@ function App() {
     setShowResult(false);
     setScore(0);
     setIssues([]);
+    setSuggestion("");
+    setLoading(false);
   };
 
   return (
@@ -58,7 +132,7 @@ function App() {
         minHeight: "100vh",
         backgroundColor: "#f5f7fa",
         padding: "40px",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "Arial, sans-serif"
       }}
     >
       <div
@@ -68,7 +142,7 @@ function App() {
           backgroundColor: "white",
           padding: "40px",
           borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
         }}
       >
         <h1 style={{ textAlign: "center" }}>
@@ -79,7 +153,7 @@ function App() {
           style={{
             textAlign: "center",
             color: "#555",
-            marginBottom: "30px",
+            marginBottom: "30px"
           }}
         >
           Check how well your website is visible and understandable
@@ -90,7 +164,7 @@ function App() {
           style={{
             display: "flex",
             gap: "10px",
-            marginBottom: "30px",
+            marginBottom: "30px"
           }}
         >
           <input
@@ -106,7 +180,7 @@ function App() {
               padding: "14px",
               border: "1px solid #ccc",
               borderRadius: "8px",
-              fontSize: "16px",
+              fontSize: "16px"
             }}
           />
 
@@ -117,12 +191,25 @@ function App() {
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
-              fontSize: "16px",
+              fontSize: "16px"
             }}
           >
             Audit Website
           </button>
         </div>
+
+        {loading && (
+          <div
+            style={{
+              marginTop: "20px",
+              padding: "20px",
+              textAlign: "center",
+              fontSize: "18px"
+            }}
+          >
+            Analyzing website...
+          </div>
+        )}
 
         {showResult && (
           <div
@@ -131,7 +218,7 @@ function App() {
               padding: "30px",
               borderRadius: "10px",
               backgroundColor: "#fafafa",
-              border: "1px solid #eee",
+              border: "1px solid #eee"
             }}
           >
             <h2>Audit Result</h2>
@@ -151,9 +238,7 @@ function App() {
             </ul>
 
             <p>
-              <strong>Suggestion:</strong> Adding FAQs, better headings,
-              and proper metadata can improve visibility in AI-based
-              search results.
+              <strong>Suggestion:</strong> {suggestion}
             </p>
 
             <button
@@ -164,7 +249,7 @@ function App() {
                 border: "none",
                 borderRadius: "8px",
                 cursor: "pointer",
-                fontSize: "15px",
+                fontSize: "15px"
               }}
             >
               Start New Audit
