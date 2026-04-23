@@ -67,13 +67,13 @@ Adding FAQs, better headings, and proper metadata can improve visibility in AI-b
 
 ## Live Project Link
 
-Add your Vercel deployment link here
+https://ai-readiness-audit-tool.vercel.app/
 
 ---
 
 ## GitHub Repository Link
 
-Add your GitHub repository link here
+https://github.com/Arun2kx/ai-readiness-audit-tool
 
 ---
 
